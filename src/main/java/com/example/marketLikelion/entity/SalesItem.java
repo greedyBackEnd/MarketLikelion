@@ -20,6 +20,10 @@ public class SalesItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
     @Column(nullable = false)
     private String title;
 

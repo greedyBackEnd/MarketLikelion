@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -28,4 +30,13 @@ public class User {
     private String email;
 
     private String address;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<SalesItem> salesItems;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Negotiation> negotiations;
 }
