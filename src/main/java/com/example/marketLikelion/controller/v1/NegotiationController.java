@@ -1,4 +1,4 @@
-package com.example.marketLikelion.controller;
+package com.example.marketLikelion.controller.v1;
 
 import com.example.marketLikelion.dto.request.NegotiationRequestDto;
 import com.example.marketLikelion.dto.response.NegotiationResponseDto;
@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/items/{itemId}/proposals")
+@RequestMapping("/api/v1/items/{itemId}/proposals")
 public class NegotiationController {
 
     private final NegotiationService negotiationService;

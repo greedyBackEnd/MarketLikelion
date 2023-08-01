@@ -11,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @RestController
-@RequestMapping("/token")
+@RequestMapping("/api/v2/token")
 public class TokenController {
     private final UserDetailsManager manager;
     private final PasswordEncoder passwordEncoder;

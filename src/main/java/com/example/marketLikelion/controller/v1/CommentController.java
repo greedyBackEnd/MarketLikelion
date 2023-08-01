@@ -1,4 +1,4 @@
-package com.example.marketLikelion.controller;
+package com.example.marketLikelion.controller.v1;
 
 import com.example.marketLikelion.dto.request.CommentRequestDto;
 import com.example.marketLikelion.dto.response.CommentResponseDto;
@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/items/{itemId}/comments")
+@RequestMapping("/api/v1/items/{itemId}/comments")
 public class CommentController {
 
     private final CommentService commentService;

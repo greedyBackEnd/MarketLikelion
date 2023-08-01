@@ -37,10 +37,10 @@ public class SalesItem {
 
     private String status = ItemStatus.ON_SALE.getStatus();
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String writer;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String password;
 
     @OneToMany(mappedBy = "salesItem", cascade = CascadeType.ALL)
