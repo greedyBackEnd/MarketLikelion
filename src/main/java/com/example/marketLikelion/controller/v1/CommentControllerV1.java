@@ -17,7 +17,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/items/{itemId}/comments")
-public class CommentController {
+public class CommentControllerV1 {
 
     private final CommentService commentService;
 

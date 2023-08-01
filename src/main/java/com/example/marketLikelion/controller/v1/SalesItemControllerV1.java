@@ -20,7 +20,7 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/items")
-public class SalesItemController {
+public class SalesItemControllerV1 {
 
     private final SalesItemService salesItemService;
 
