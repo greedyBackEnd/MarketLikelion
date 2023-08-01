@@ -17,7 +17,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/items/{itemId}/proposals")
-public class NegotiationController {
+public class NegotiationControllerV1 {
 
     private final NegotiationService negotiationService;
 

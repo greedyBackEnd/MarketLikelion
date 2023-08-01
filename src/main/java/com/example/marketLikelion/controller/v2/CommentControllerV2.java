@@ -1,7 +1,8 @@
-package com.example.marketLikelion.controller.v1;
+package com.example.marketLikelion.controller.v2;
 
 import com.example.marketLikelion.dto.request.CommentRequestDto;
 import com.example.marketLikelion.dto.response.CommentResponseDto;
+import com.example.marketLikelion.jwt.JwtTokenUtils;
 import com.example.marketLikelion.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,16 +17,18 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/items/{itemId}/comments")
-public class CommentController {
+@RequestMapping("/api/v2/items/{itemId}/comments")
+public class CommentControllerV2 {
 
     private final CommentService commentService;
+    private final JwtTokenUtils jwtTokenUtils;
 
     @PostMapping
     public ResponseEntity<Map<String, String>> registerComment(@PathVariable Long itemId,
                                                                @RequestBody CommentRequestDto requestDto) {
+        String username = jwtTokenUtils.getCurrentUsername();
 
-        commentService.registerComment(itemId, requestDto);
+        commentService.registerComment(itemId, requestDto, username);
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "댓글이 등록되었습니다.");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
@@ -44,7 +47,9 @@ public class CommentController {
     public ResponseEntity<Map<String, String>> updateComment(@PathVariable Long itemId,
                                                              @PathVariable Long commentId,
                                                              @RequestBody CommentRequestDto requestDto) {
-        commentService.updateComment(itemId, commentId, requestDto);
+        String username = jwtTokenUtils.getCurrentUsername();
+
+        commentService.updateComment(itemId, commentId, requestDto, username);
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "댓글이 수정되었습니다.");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
@@ -54,7 +59,9 @@ public class CommentController {
     public ResponseEntity<Map<String, String>> registerReply(@PathVariable Long itemId,
                                                              @PathVariable Long commentId,
                                                              @RequestBody CommentRequestDto requestDto) {
-        commentService.registerReply(itemId, commentId, requestDto);
+        String username = jwtTokenUtils.getCurrentUsername();
+
+        commentService.registerReply(itemId, commentId, requestDto, username);
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "댓글에 답변이 추가되었습니다.");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
@@ -62,9 +69,10 @@ public class CommentController {
 
     @DeleteMapping("/{commentId}")
     public ResponseEntity<Map<String, String>> deleteComment(@PathVariable Long itemId,
-                                                             @PathVariable Long commentId,
-                                                             @RequestBody CommentRequestDto requestDto) {
-        commentService.deleteComment(itemId, commentId, requestDto);
+                                                             @PathVariable Long commentId) {
+        String username = jwtTokenUtils.getCurrentUsername();
+
+        commentService.deleteComment(itemId, commentId, username);
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "댓글을 삭제했습니다.");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);

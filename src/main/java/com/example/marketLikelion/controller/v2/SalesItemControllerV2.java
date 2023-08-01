@@ -1,14 +1,19 @@
-package com.example.marketLikelion.controller.v1;
+package com.example.marketLikelion.controller.v2;
 
 import com.example.marketLikelion.dto.request.SalesItemRequestDto;
 import com.example.marketLikelion.dto.response.SalesItemResponseDto;
+import com.example.marketLikelion.entity.CustomUserDetails;
+import com.example.marketLikelion.jwt.JwtTokenUtils;
 import com.example.marketLikelion.service.SalesItemService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,18 +22,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/items")
-public class SalesItemController {
+@RequestMapping("/api/v2/items")
+public class SalesItemControllerV2 {
 
     private final SalesItemService salesItemService;
+    private final JwtTokenUtils jwtTokenUtils;
 
     @PostMapping
     public ResponseEntity<Map<String, String>> registerItem(@RequestBody SalesItemRequestDto requestDto,
                                                             @RequestPart(value = "file", required = false) Optional<MultipartFile> fileOptional) throws IOException {
         MultipartFile file = fileOptional.orElse(null);
-        salesItemService.registerItem(requestDto, file);
+
+        String username = jwtTokenUtils.getCurrentUsername();
+
+        salesItemService.registerItem(requestDto, username, file);
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "등록이 완료되었습니다.");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
@@ -51,7 +61,8 @@ public class SalesItemController {
     @PutMapping("/{itemId}")
     public ResponseEntity<Map<String, String>> updateItem(@PathVariable Long itemId,
                                                           @RequestBody SalesItemRequestDto requestDto) {
-        salesItemService.updateItem(itemId, requestDto);
+        String username = jwtTokenUtils.getCurrentUsername();
+        salesItemService.updateItem(itemId, requestDto, username);
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "물품 정보가 수정되었습니다.");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
@@ -59,19 +70,18 @@ public class SalesItemController {
 
     @PutMapping("/{itemId}/image")
     public ResponseEntity<Map<String, String>> updateItemImage(@PathVariable Long itemId,
-                                                               @RequestParam("image") MultipartFile imageFile,
-                                                               @RequestParam("writer") String writer,
-                                                               @RequestParam("password") String password) {
-        salesItemService.updateItemImage(itemId, imageFile, writer, password);
+                                                               @RequestParam("image") MultipartFile imageFile) {
+        String username = jwtTokenUtils.getCurrentUsername();
+        salesItemService.updateItemImage(itemId, imageFile, username);
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "이미지가 등록되었습니다.");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
     @DeleteMapping("/{itemId}")
-    public ResponseEntity<Map<String, String>> deleteItem(@PathVariable Long itemId,
-                                                          @RequestBody SalesItemRequestDto requestDto) {
-        salesItemService.deleteItem(itemId, requestDto);
+    public ResponseEntity<Map<String, String>> deleteItem(@PathVariable Long itemId) {
+        String username = jwtTokenUtils.getCurrentUsername();
+        salesItemService.deleteItem(itemId, username);
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "물품을 삭제했습니다.");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
