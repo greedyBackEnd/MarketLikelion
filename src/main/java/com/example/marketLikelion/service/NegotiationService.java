@@ -26,6 +26,7 @@ public class NegotiationService {
     private final NegotiationRepository negotiationRepository;
     private final UserRepository userRepository;
 
+    // 제안 등록 (유저 X -> V1)
     @Transactional
     public void registerNegotiation(Long itemId, NegotiationRequestDto requestDto) {
         SalesItem salesItem = salesItemRepository.findById(itemId)
@@ -37,6 +38,7 @@ public class NegotiationService {
         negotiationRepository.save(negotiation);
     }
 
+    // 제안 등록 (유저 O -> V2)
     @Transactional
     public void registerNegotiation(Long itemId, NegotiationRequestDto requestDto, String username) {
         SalesItem salesItem = salesItemRepository.findById(itemId)
@@ -50,6 +52,7 @@ public class NegotiationService {
         negotiationRepository.save(negotiation);
     }
 
+    // 제안 조회 (유저 X -> V1)
     public Page<NegotiationResponseDto> getNegotiations(Long itemId, String writer, String password, Pageable pageable) {
         SalesItem salesItem = salesItemRepository.findById(itemId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 아이템이 존재하지 않습니다. id=" + itemId));
@@ -63,6 +66,7 @@ public class NegotiationService {
         }
     }
 
+    // 제안 조회 (유저 O -> V2)
     public Page<NegotiationResponseDto> getNegotiations(Long itemId, String username, Pageable pageable) {
         SalesItem salesItem = salesItemRepository.findById(itemId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 아이템이 존재하지 않습니다. id=" + itemId));
@@ -77,6 +81,7 @@ public class NegotiationService {
         }
     }
 
+    // 제안 수정 (유저 X -> V1)
     @Transactional
     public void updateNegotiation(Long itemId, Long proposalId, NegotiationRequestDto requestDto) {
         salesItemRepository.findById(itemId)
@@ -93,6 +98,7 @@ public class NegotiationService {
         negotiationRepository.save(negotiation);
     }
 
+    // 제안 수정 (유저 O -> V2)
     @Transactional
     public void updateNegotiation(Long itemId, Long proposalId, NegotiationRequestDto requestDto, String username) {
         salesItemRepository.findById(itemId)
@@ -109,6 +115,7 @@ public class NegotiationService {
         negotiationRepository.save(negotiation);
     }
 
+    // 제안 삭제 (유저 X -> V1)
     @Transactional
     public void deleteNegotiation(Long itemId, Long proposalId, NegotiationRequestDto requestDto) {
         salesItemRepository.findById(itemId)
@@ -124,6 +131,7 @@ public class NegotiationService {
         negotiationRepository.delete(negotiation);
     }
 
+    // 제안 삭제 (유저 O -> V2)
     @Transactional
     public void deleteNegotiation(Long itemId, Long proposalId, String username) {
         salesItemRepository.findById(itemId)
@@ -139,6 +147,7 @@ public class NegotiationService {
         negotiationRepository.delete(negotiation);
     }
 
+    // 제안 수락 및 확정 (유저 X -> V1)
     @Transactional
     public void changeNegotiationStatus(Long itemId, Long proposalId, NegotiationRequestDto requestDto) {
         SalesItem salesItem = salesItemRepository.findById(itemId)
@@ -166,6 +175,7 @@ public class NegotiationService {
         }
     }
 
+    // 제안 수락 및 확정 (유저 O -> V2)
     @Transactional
     public void changeNegotiationStatus(Long itemId, Long proposalId, NegotiationRequestDto requestDto, String username) {
 
