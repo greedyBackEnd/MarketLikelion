@@ -1,4 +1,4 @@
-package com.example.marketLikelion.controller;
+package com.example.marketLikelion.controller.v2;
 
 import com.example.marketLikelion.dto.request.UserLoginDto;
 import com.example.marketLikelion.dto.request.UserRegistrationDto;
@@ -22,7 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("/api/v2/auth")
 public class UserAuthController {
 
     private final UserDetailsManager manager;

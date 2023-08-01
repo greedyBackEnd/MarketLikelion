@@ -1,4 +1,4 @@
-package com.example.marketLikelion.controller;
+package com.example.marketLikelion.controller.v1;
 
 import com.example.marketLikelion.dto.request.SalesItemRequestDto;
 import com.example.marketLikelion.dto.response.SalesItemResponseDto;
@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/items")
+@RequestMapping("/api/v1/items")
 public class SalesItemController {
 
     private final SalesItemService salesItemService;

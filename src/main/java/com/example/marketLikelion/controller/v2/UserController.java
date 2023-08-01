@@ -1,4 +1,4 @@
-package com.example.marketLikelion.controller;
+package com.example.marketLikelion.controller.v2;
 
 import com.example.marketLikelion.dto.response.UserResponseDto;
 import com.example.marketLikelion.entity.CustomUserDetails;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/api/v2/users")
 public class UserController {
 
     private final UserService userService;

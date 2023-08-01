@@ -25,10 +25,10 @@ public class Comment {
     @JoinColumn(name = "salesItemId")
     private SalesItem salesItem;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String writer;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String password;
 
     @Column(nullable = false)
