@@ -3,6 +3,7 @@ package com.example.marketLikelion.config;
 import com.example.marketLikelion.jwt.JwtTokenFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -26,11 +27,10 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authHttp -> authHttp
-                                .requestMatchers("/auth/login", "/auth/signup", "/token/issue", "/api/v1/**").permitAll()
-                                .requestMatchers("/api/v2/users/**", "/auth/logout", "/token/secured", "/api/v2/**").authenticated()
-//                                .requestMatchers("/").anonymous()
-                                .anyRequest().permitAll()
-//                                .anyRequest().authenticated()
+                                .requestMatchers("/api/v2/auth/**", "/token/issue", "/api/v1/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/v2/items/**").permitAll()
+                                .requestMatchers("/api/v2/users/**").authenticated()
+                                .anyRequest().authenticated()
                 )
                 .sessionManagement(
                         sessionManagement -> sessionManagement
