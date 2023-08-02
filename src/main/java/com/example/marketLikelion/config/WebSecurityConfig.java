@@ -27,7 +27,9 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authHttp -> authHttp
+                                // auth 및 기존 각 ID와 PASSWORD를 작성하는 형식의 v1
                                 .requestMatchers("/api/v2/auth/**", "/token/issue", "/api/v1/**").permitAll()
+                                // 아이템 조회 관련
                                 .requestMatchers(HttpMethod.GET, "/api/v2/items/**").permitAll()
                                 .requestMatchers("/api/v2/users/**").authenticated()
                                 .anyRequest().authenticated()

@@ -15,12 +15,14 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    // 유저 정보 조회
     public UserResponseDto getUserProfile(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("해당 유저를 찾을 수 없습니다." + username));
         return UserResponseDto.of(user);
     }
 
+    // 유저 정보 수정
     @Transactional
     public void updateUser(String username, UserUpdateDto updateDto) {
         User user = userRepository.findByUsername(username)

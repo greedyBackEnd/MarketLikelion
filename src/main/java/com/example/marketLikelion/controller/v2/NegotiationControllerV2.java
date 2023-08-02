@@ -23,6 +23,7 @@ public class NegotiationControllerV2 {
     private final NegotiationService negotiationService;
     private final JwtTokenUtils jwtTokenUtils;
 
+    // 제안 등록
     @PostMapping
     public ResponseEntity<Map<String, String>> registerNegotiation(@PathVariable Long itemId,
                                                                    @RequestBody NegotiationRequestDto requestDto) {
@@ -34,6 +35,7 @@ public class NegotiationControllerV2 {
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
+    // 제안 조회
     @GetMapping
     public ResponseEntity<Page<NegotiationResponseDto>> getNegotiations(@PathVariable Long itemId,
                                                                         @RequestParam(defaultValue = "0") int page,
@@ -45,6 +47,7 @@ public class NegotiationControllerV2 {
         return new ResponseEntity<>(negotiations, HttpStatus.OK);
     }
 
+    // 제안 수정 및 상태 변경 (수락 -> 확정 -> 그 외 거절)
     @PutMapping("/{proposalId}")
     public ResponseEntity<Map<String, String>> changeNegotiationStatus(@PathVariable Long itemId,
                                                                        @PathVariable Long proposalId,
@@ -68,6 +71,7 @@ public class NegotiationControllerV2 {
         throw new IllegalArgumentException("잘못된 요청입니다.");
     }
 
+    // 제안 삭제
     @DeleteMapping("/{proposalId}")
     public ResponseEntity<Map<String, String>> deleteNegotiation(@PathVariable Long itemId,
                                                                  @PathVariable Long proposalId) {

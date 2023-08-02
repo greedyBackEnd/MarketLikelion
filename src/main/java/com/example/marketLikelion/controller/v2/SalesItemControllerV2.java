@@ -28,6 +28,7 @@ public class SalesItemControllerV2 {
     private final SalesItemService salesItemService;
     private final JwtTokenUtils jwtTokenUtils;
 
+    // 상품 등록
     @PostMapping
     public ResponseEntity<Map<String, String>> registerItem(@RequestBody SalesItemRequestDto requestDto,
                                                             @RequestPart(value = "file", required = false) Optional<MultipartFile> fileOptional) throws IOException {
@@ -40,6 +41,7 @@ public class SalesItemControllerV2 {
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
+    // 상품 전체 조회
     @GetMapping
     public ResponseEntity<Page<SalesItemResponseDto>> getItems(@RequestParam(defaultValue = "0") int page,
                                                                @RequestParam(defaultValue = "10") int limit) {
@@ -49,12 +51,14 @@ public class SalesItemControllerV2 {
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
+    // 상품 단일 조회
     @GetMapping("/{itemId}")
     public ResponseEntity<SalesItemResponseDto> getItem(@PathVariable Long itemId) {
         SalesItemResponseDto item = salesItemService.getOneItem(itemId);
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
+    // 상품 수정
     @PutMapping("/{itemId}")
     public ResponseEntity<Map<String, String>> updateItem(@PathVariable Long itemId,
                                                           @RequestBody SalesItemRequestDto requestDto) {
@@ -66,6 +70,7 @@ public class SalesItemControllerV2 {
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
+    // 상품 이미지 수정 및 업로드
     @PutMapping("/{itemId}/image")
     public ResponseEntity<Map<String, String>> updateItemImage(@PathVariable Long itemId,
                                                                @RequestParam("image") MultipartFile imageFile) {
@@ -77,6 +82,7 @@ public class SalesItemControllerV2 {
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
+    // 상품 삭제
     @DeleteMapping("/{itemId}")
     public ResponseEntity<Map<String, String>> deleteItem(@PathVariable Long itemId) {
         String username = jwtTokenUtils.getCurrentUsername();
