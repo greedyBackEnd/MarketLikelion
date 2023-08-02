@@ -11,6 +11,7 @@ import java.nio.file.StandardCopyOption;
 
 public class FileUploadUtil {
 
+    // 이미지 저장
     public static void saveFile(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {
         Path uploadPath = Paths.get(uploadDir);
 

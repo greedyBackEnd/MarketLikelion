@@ -18,6 +18,10 @@ public class Negotiation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "salesItemId")
     private SalesItem salesItem;
@@ -27,10 +31,8 @@ public class Negotiation {
 
     private String status = NegotiationStatus.SUGGESTED.getStatus();
 
-    @Column(nullable = false)
     private String writer;
 
-    @Column(nullable = false)
     private String password;
 
     public void updateSuggestedPrice(int suggestedPrice) {

@@ -2,6 +2,7 @@ package com.example.marketLikelion.repository;
 
 import com.example.marketLikelion.entity.Negotiation;
 import com.example.marketLikelion.entity.SalesItem;
+import com.example.marketLikelion.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,5 +14,6 @@ import java.util.List;
 public interface NegotiationRepository extends JpaRepository<Negotiation, Long> {
     Page<Negotiation> findBySalesItem(SalesItem salesItem, Pageable pageable);
     Page<Negotiation> findBySalesItemAndWriterAndPassword(SalesItem salesItem, String writer, String password, Pageable pageable);
+    Page<Negotiation> findBySalesItemAndUser(SalesItem salesItem, User user, Pageable pageable);
     List<Negotiation> findBySalesItemAndIdNot(SalesItem salesItem, Long id);
 }

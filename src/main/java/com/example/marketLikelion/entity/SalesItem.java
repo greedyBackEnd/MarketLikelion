@@ -20,6 +20,10 @@ public class SalesItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
     @Column(nullable = false)
     private String title;
 
@@ -33,10 +37,8 @@ public class SalesItem {
 
     private String status = ItemStatus.ON_SALE.getStatus();
 
-    @Column(nullable = false)
     private String writer;
 
-    @Column(nullable = false)
     private String password;
 
     @OneToMany(mappedBy = "salesItem", cascade = CascadeType.ALL)

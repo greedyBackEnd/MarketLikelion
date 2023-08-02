@@ -6,7 +6,7 @@ spring:
   jpa:
     database: mysql
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
     properties:
@@ -20,3 +20,6 @@ logging:
     org:
       hibernate:
         type: trace
+
+jwt:
+  secret: sdgawerfasdbewrtgdfgasdfwefsdahytjyuojikbhdgsge

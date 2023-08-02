@@ -1,4 +1,4 @@
-package com.example.marketLikelion.controller;
+package com.example.marketLikelion.controller.v1;
 
 import com.example.marketLikelion.dto.request.SalesItemRequestDto;
 import com.example.marketLikelion.dto.response.SalesItemResponseDto;
@@ -19,11 +19,12 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/items")
-public class SalesItemController {
+@RequestMapping("/api/v1/items")
+public class SalesItemControllerV1 {
 
     private final SalesItemService salesItemService;
 
+    // 상품 등록
     @PostMapping
     public ResponseEntity<Map<String, String>> registerItem(@RequestBody SalesItemRequestDto requestDto,
                                                             @RequestPart(value = "file", required = false) Optional<MultipartFile> fileOptional) throws IOException {
@@ -34,6 +35,7 @@ public class SalesItemController {
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
+    // 상품 전체 조회
     @GetMapping
     public ResponseEntity<Page<SalesItemResponseDto>> getItems(@RequestParam(defaultValue = "0") int page,
                                                                @RequestParam(defaultValue = "10") int limit) {
@@ -42,12 +44,14 @@ public class SalesItemController {
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
+    // 상품 단일 조회
     @GetMapping("/{itemId}")
     public ResponseEntity<SalesItemResponseDto> getItem(@PathVariable Long itemId) {
         SalesItemResponseDto item = salesItemService.getOneItem(itemId);
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
+    // 상품 수정
     @PutMapping("/{itemId}")
     public ResponseEntity<Map<String, String>> updateItem(@PathVariable Long itemId,
                                                           @RequestBody SalesItemRequestDto requestDto) {
@@ -57,6 +61,7 @@ public class SalesItemController {
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
+    // 상품 이미지 업로드 및 수정
     @PutMapping("/{itemId}/image")
     public ResponseEntity<Map<String, String>> updateItemImage(@PathVariable Long itemId,
                                                                @RequestParam("image") MultipartFile imageFile,
@@ -68,6 +73,7 @@ public class SalesItemController {
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
+    // 상품 삭제
     @DeleteMapping("/{itemId}")
     public ResponseEntity<Map<String, String>> deleteItem(@PathVariable Long itemId,
                                                           @RequestBody SalesItemRequestDto requestDto) {
