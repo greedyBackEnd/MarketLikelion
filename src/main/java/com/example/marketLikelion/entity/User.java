@@ -39,4 +39,13 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Negotiation> negotiations;
+
+    public void updateUser(User userUpdate) {
+        if (userUpdate.getPassword() != null) {
+            this.password = userUpdate.getPassword();
+        }
+        this.phone = userUpdate.getPhone();
+        this.email = userUpdate.getEmail();
+        this.address = userUpdate.getAddress();
+    }
 }
