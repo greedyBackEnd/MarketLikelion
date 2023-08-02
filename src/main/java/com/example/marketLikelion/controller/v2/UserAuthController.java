@@ -29,6 +29,7 @@ public class UserAuthController {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenUtils jwtTokenUtils;
 
+    // 유저 회원가입
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody UserRegistrationDto dto) {
         CustomUserDetails userDetails = CustomUserDetails.builder()
@@ -46,6 +47,7 @@ public class UserAuthController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    // 유저 로그인
     @PostMapping("/login")
     public ResponseEntity<JwtTokenDto> login(@RequestBody UserLoginDto dto) {
         UserDetails userDetails = manager.loadUserByUsername(dto.getUsername());
@@ -56,6 +58,7 @@ public class UserAuthController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    // 유저 로그아웃
     @GetMapping("/logout")
     private ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
         new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());

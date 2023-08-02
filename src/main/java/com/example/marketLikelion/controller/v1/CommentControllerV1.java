@@ -21,6 +21,7 @@ public class CommentControllerV1 {
 
     private final CommentService commentService;
 
+    // 댓글 등록
     @PostMapping
     public ResponseEntity<Map<String, String>> registerComment(@PathVariable Long itemId,
                                                                @RequestBody CommentRequestDto requestDto) {
@@ -31,6 +32,7 @@ public class CommentControllerV1 {
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
+    // 댓글 전체 조회
     @GetMapping
     public ResponseEntity<Page<CommentResponseDto>> getComments(@PathVariable Long itemId,
                                                                 @RequestParam(defaultValue = "0") int page,
@@ -40,6 +42,7 @@ public class CommentControllerV1 {
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
+    // 댓글 수정
     @PutMapping("/{commentId}")
     public ResponseEntity<Map<String, String>> updateComment(@PathVariable Long itemId,
                                                              @PathVariable Long commentId,
@@ -50,6 +53,7 @@ public class CommentControllerV1 {
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
+    // 답글 등록
     @PutMapping("/{commentId}/reply")
     public ResponseEntity<Map<String, String>> registerReply(@PathVariable Long itemId,
                                                              @PathVariable Long commentId,
@@ -60,6 +64,7 @@ public class CommentControllerV1 {
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
+    // 댓글 삭제
     @DeleteMapping("/{commentId}")
     public ResponseEntity<Map<String, String>> deleteComment(@PathVariable Long itemId,
                                                              @PathVariable Long commentId,

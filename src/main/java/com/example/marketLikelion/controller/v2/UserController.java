@@ -25,13 +25,16 @@ public class UserController {
     private final UserService userService;
     private final JwtTokenUtils jwtTokenUtils;
 
+    // 유저 정보 조회
     @GetMapping("/profile")
     private ResponseEntity<UserResponseDto> getProfile() {
         String username = jwtTokenUtils.getCurrentUsername();
         UserResponseDto userProfile = userService.getUserProfile(username);
+
         return new ResponseEntity<>(userProfile, HttpStatus.OK);
     }
 
+    // 유저 정보 수정
     @PutMapping("/profile")
     private ResponseEntity<Map<String, String>> updateProfile(@RequestBody UserUpdateDto userUpdateDto) {
         String username = jwtTokenUtils.getCurrentUsername();

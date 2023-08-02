@@ -52,16 +52,13 @@ public class JpaUserDetailsManager implements UserDetailsManager {
 
     @Override
     public void updateUser(UserDetails user) {
-
     }
 
     @Override
     public void deleteUser(String username) {
-
     }
 
     @Override
     public void changePassword(String oldPassword, String newPassword) {
-
     }
 }
