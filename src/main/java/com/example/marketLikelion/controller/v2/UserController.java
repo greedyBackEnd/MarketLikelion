@@ -29,6 +29,7 @@ public class UserController {
     private ResponseEntity<UserResponseDto> getProfile() {
         String username = jwtTokenUtils.getCurrentUsername();
         UserResponseDto userProfile = userService.getUserProfile(username);
+
         return new ResponseEntity<>(userProfile, HttpStatus.OK);
     }
 

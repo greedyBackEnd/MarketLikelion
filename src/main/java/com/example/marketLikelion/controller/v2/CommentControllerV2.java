@@ -27,8 +27,8 @@ public class CommentControllerV2 {
     public ResponseEntity<Map<String, String>> registerComment(@PathVariable Long itemId,
                                                                @RequestBody CommentRequestDto requestDto) {
         String username = jwtTokenUtils.getCurrentUsername();
-
         commentService.registerComment(itemId, requestDto, username);
+
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "댓글이 등록되었습니다.");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
@@ -48,8 +48,8 @@ public class CommentControllerV2 {
                                                              @PathVariable Long commentId,
                                                              @RequestBody CommentRequestDto requestDto) {
         String username = jwtTokenUtils.getCurrentUsername();
-
         commentService.updateComment(itemId, commentId, requestDto, username);
+
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "댓글이 수정되었습니다.");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
@@ -60,8 +60,8 @@ public class CommentControllerV2 {
                                                              @PathVariable Long commentId,
                                                              @RequestBody CommentRequestDto requestDto) {
         String username = jwtTokenUtils.getCurrentUsername();
-
         commentService.registerReply(itemId, commentId, requestDto, username);
+
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "댓글에 답변이 추가되었습니다.");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
@@ -71,8 +71,8 @@ public class CommentControllerV2 {
     public ResponseEntity<Map<String, String>> deleteComment(@PathVariable Long itemId,
                                                              @PathVariable Long commentId) {
         String username = jwtTokenUtils.getCurrentUsername();
-
         commentService.deleteComment(itemId, commentId, username);
+
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "댓글을 삭제했습니다.");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);

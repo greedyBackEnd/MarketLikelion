@@ -2,7 +2,6 @@ package com.example.marketLikelion.controller.v2;
 
 import com.example.marketLikelion.dto.request.SalesItemRequestDto;
 import com.example.marketLikelion.dto.response.SalesItemResponseDto;
-import com.example.marketLikelion.entity.CustomUserDetails;
 import com.example.marketLikelion.jwt.JwtTokenUtils;
 import com.example.marketLikelion.service.SalesItemService;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,11 +31,10 @@ public class SalesItemControllerV2 {
     @PostMapping
     public ResponseEntity<Map<String, String>> registerItem(@RequestBody SalesItemRequestDto requestDto,
                                                             @RequestPart(value = "file", required = false) Optional<MultipartFile> fileOptional) throws IOException {
-        MultipartFile file = fileOptional.orElse(null);
-
         String username = jwtTokenUtils.getCurrentUsername();
-
+        MultipartFile file = fileOptional.orElse(null);
         salesItemService.registerItem(requestDto, username, file);
+
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "등록이 완료되었습니다.");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
@@ -49,6 +45,7 @@ public class SalesItemControllerV2 {
                                                                @RequestParam(defaultValue = "10") int limit) {
         Pageable pageable = PageRequest.of(page, limit);
         Page<SalesItemResponseDto> items = salesItemService.getItems(pageable);
+
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
@@ -63,6 +60,7 @@ public class SalesItemControllerV2 {
                                                           @RequestBody SalesItemRequestDto requestDto) {
         String username = jwtTokenUtils.getCurrentUsername();
         salesItemService.updateItem(itemId, requestDto, username);
+
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "물품 정보가 수정되었습니다.");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
@@ -73,6 +71,7 @@ public class SalesItemControllerV2 {
                                                                @RequestParam("image") MultipartFile imageFile) {
         String username = jwtTokenUtils.getCurrentUsername();
         salesItemService.updateItemImage(itemId, imageFile, username);
+
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "이미지가 등록되었습니다.");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
@@ -82,6 +81,7 @@ public class SalesItemControllerV2 {
     public ResponseEntity<Map<String, String>> deleteItem(@PathVariable Long itemId) {
         String username = jwtTokenUtils.getCurrentUsername();
         salesItemService.deleteItem(itemId, username);
+
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "물품을 삭제했습니다.");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);

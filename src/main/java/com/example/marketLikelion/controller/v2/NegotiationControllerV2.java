@@ -27,8 +27,8 @@ public class NegotiationControllerV2 {
     public ResponseEntity<Map<String, String>> registerNegotiation(@PathVariable Long itemId,
                                                                    @RequestBody NegotiationRequestDto requestDto) {
         String username = jwtTokenUtils.getCurrentUsername();
-
         negotiationService.registerNegotiation(itemId, requestDto, username);
+
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "구매 제안이 등록되었습니다.");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
@@ -39,9 +39,9 @@ public class NegotiationControllerV2 {
                                                                         @RequestParam(defaultValue = "0") int page,
                                                                         @RequestParam(defaultValue = "10") int limit) {
         String username = jwtTokenUtils.getCurrentUsername();
-
         Pageable pageable = PageRequest.of(page, limit);
         Page<NegotiationResponseDto> negotiations = negotiationService.getNegotiations(itemId, username, pageable);
+
         return new ResponseEntity<>(negotiations, HttpStatus.OK);
     }
 
@@ -72,8 +72,8 @@ public class NegotiationControllerV2 {
     public ResponseEntity<Map<String, String>> deleteNegotiation(@PathVariable Long itemId,
                                                                  @PathVariable Long proposalId) {
         String username = jwtTokenUtils.getCurrentUsername();
-
         negotiationService.deleteNegotiation(itemId, proposalId, username);
+
         Map<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "제안을 삭제했습니다.");
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
