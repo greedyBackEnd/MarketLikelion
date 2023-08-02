@@ -24,13 +24,11 @@ public class UserController {
 
     private final UserService userService;
     private final JwtTokenUtils jwtTokenUtils;
-    private final JpaUserDetailsManager userDetailsManager;
 
     @GetMapping("/profile")
-    private ResponseEntity<UserResponseDto> myProfile(Authentication authentication) {
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        log.info(userDetails.getUsername());
-        UserResponseDto userProfile = userService.getUserProfile(userDetails.getUsername());
+    private ResponseEntity<UserResponseDto> getProfile() {
+        String username = jwtTokenUtils.getCurrentUsername();
+        UserResponseDto userProfile = userService.getUserProfile(username);
         return new ResponseEntity<>(userProfile, HttpStatus.OK);
     }
 
